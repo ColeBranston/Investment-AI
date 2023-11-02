@@ -12,6 +12,7 @@ from keras.layers import Dense, LSTM
 import matplotlib.pyplot as plt
 from matplotlib import style
 from datetime import datetime
+import yfinance as yf
 
 plt.style.use('dark_background')
 
@@ -22,7 +23,7 @@ now = datetime.now()
 now = now.date()
 
 #defining the data frame
-df = web.DataReader(var, data_source = 'yahoo', start = '2012-01-01', end = now)
+df = yf.download(var, start='2012-01-01', end=now)
 
 #show the data frame
 print(df)
@@ -144,7 +145,7 @@ valid['Predictions'] = predictions
 print(valid)
 
 #Get the quote 
-quote = web.DataReader(var, data_source = 'yahoo', start = '2012-01-01', end=now)
+quote = yf.download(var, start='2012-01-01', end=now)
 
 #create a new data frame
 new_df = quote.filter(['Close'])
@@ -173,7 +174,7 @@ pred_price = model.predict(X_test)
 #undo the scaling
 pred_price = scaler.inverse_transform(pred_price)
 
-quote2 = web.DataReader(var, data_source = 'yahoo', start = "2019-12-18", end = now)
+quote2 = yf.download(var, start='2019-12-18', end=now)
 
 print(quote2['Close'])
 
